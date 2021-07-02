@@ -11,7 +11,7 @@ from selenium import webdriver
 import time
 import pandas as pd
 
-def scrape_jobs(keyword, num_jobs, verbose, path):
+def scrape_jobs(keyword, num_jobs, debug, path):
     
     i=1 #initial entry
     #Initializing the webdriver
@@ -90,6 +90,7 @@ def scrape_jobs(keyword, num_jobs, verbose, path):
            
             #if feature not found set it's value to -1
             #at times you might catch StaleElement exception, just add it in the block it occurs at.
+            #it can at times happen due to the internet connection, the webpage might not load, so just in case.
             time.sleep(3)
             try:
                 salary_estimate = driver.find_element_by_xpath(".//div[@class='css-nq3w9f pr-xxsm']/span[@class='css-56kyx5 css-16kxj2j e1wijj242']").text
@@ -142,7 +143,7 @@ def scrape_jobs(keyword, num_jobs, verbose, path):
             except StaleElementReferenceException:
                 revenue = -1
             #Printing for checking.
-            if verbose:
+            if debug:
                 print("Job Title: {}".format(job_title))
                 print("Salary Estimate: {}".format(salary_estimate))
                 print("Job Description: {}".format(job_description[:500]))

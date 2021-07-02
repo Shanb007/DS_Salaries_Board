@@ -12,7 +12,7 @@ import gd_scraper as gds
 path = "/home/shanb007/Desktop/Data Science/Project DS Salaries/chromedriver"
 
 #while giving the keyword i.e. job searching for put '-' in between.
-df = gds.scrape_jobs('data-scientist', 1000, False, path)
+df = gds.scrape_jobs('data-scientist', 900, False, path)
 
 df.to_csv('gd_jobs.csv', index = False)
 

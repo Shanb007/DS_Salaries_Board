@@ -28,7 +28,7 @@ def scrape_jobs(keyword, num_jobs, verbose, path):
     while len(jobs) < num_jobs:  #If true, should be still looking for new jobs.
 
         #Let the page load.
-        time.sleep(4)
+        time.sleep(10)
         #Sign-up prompt appears after the second click, get rid of it by below try
         try:
             driver.find_element_by_class_name("react-job").click()
@@ -40,7 +40,7 @@ def scrape_jobs(keyword, num_jobs, verbose, path):
             #print("selected vala didn't work")
             pass
 
-        time.sleep(.3)
+        time.sleep(3)
 
         try:
             driver.find_element_by_css_selector('[alt="Close"]').click() #clicking to the X.
@@ -65,9 +65,12 @@ def scrape_jobs(keyword, num_jobs, verbose, path):
             if len(jobs) >= num_jobs:
                 break
             #print("job button start")
-            job_button.click()  #we browse through jobs with clicks
+            try:
+                job_button.click()  #we browse through jobs with clicks
+            except StaleElementReferenceException:
+                continue
             #print("job button clicked")
-            time.sleep(1)
+            time.sleep(4)
             collected_successfully = False
             
             while not collected_successfully:
@@ -87,45 +90,57 @@ def scrape_jobs(keyword, num_jobs, verbose, path):
            
             #if feature not found set it's value to -1
             #at times you might catch StaleElement exception, just add it in the block it occurs at.
+            time.sleep(3)
             try:
                 salary_estimate = driver.find_element_by_xpath(".//div[@class='css-nq3w9f pr-xxsm']/span[@class='css-56kyx5 css-16kxj2j e1wijj242']").text
             except NoSuchElementException:
+                salary_estimate = -1
+            except StaleElementReferenceException:
                 salary_estimate = -1
             
             try:
                 rating = driver.find_element_by_xpath(".//div[@class='mr-sm css-ey2fjr e1pr2f4f2']").text
             except NoSuchElementException:
-                rating = -1 
+                rating = -1
+            except StaleElementReferenceException:
+                rating = -1
 
             try:
-                size = driver.find_element_by_xpath(".//div[@class='d-flex justify-content-start css-rmzuhb e1pvx6aw0'][1]/span[@class='css-i9gxme e1pvx6aw2']").text
+                size = driver.find_element_by_xpath(".//div[@class='d-flex justify-content-start css-rmzuhb e1pvx6aw0'][1]").text
             except NoSuchElementException:
                 size = -1
-                
+            except StaleElementReferenceException:
+                size = -1    
             try:
                 founded = driver.find_element_by_xpath(".//div[@class='d-flex justify-content-start css-rmzuhb e1pvx6aw0'][2]").text
             except NoSuchElementException:
                 founded = -1
+            except StaleElementReferenceException:
+                founded = -1
             try:
-                type_of_ownership = driver.find_element_by_xpath(".//div[@class='d-flex justify-content-start css-rmzuhb e1pvx6aw0'][3]/span[@class='css-i9gxme e1pvx6aw2']").text
+                type_of_ownership = driver.find_element_by_xpath(".//div[@class='d-flex justify-content-start css-rmzuhb e1pvx6aw0'][3]").text
             except NoSuchElementException:
                 type_of_ownership = -1
-
+            except StaleElementReferenceException:
+                type_of_ownership = -1
             try:
                 industry = driver.find_element_by_xpath(".//div[@class='d-flex justify-content-start css-rmzuhb e1pvx6aw0'][4]").text
             except NoSuchElementException:
                 industry = -1
-
+            except StaleElementReferenceException:
+                industry = -1
             try:
                 sector = driver.find_element_by_xpath(".//div[@class='d-flex justify-content-start css-rmzuhb e1pvx6aw0'][5]").text
             except NoSuchElementException:
                 sector = -1
-
+            except StaleElementReferenceException:
+                sector = -1
             try:
                 revenue = driver.find_element_by_xpath(".//div[@class='d-flex justify-content-start css-rmzuhb e1pvx6aw0'][6]").text
             except NoSuchElementException:
                 revenue = -1
-            
+            except StaleElementReferenceException:
+                revenue = -1
             #Printing for checking.
             if verbose:
                 print("Job Title: {}".format(job_title))

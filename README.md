@@ -20,7 +20,7 @@
 
 Refrring to the above article, tried to scrape some necessary feature for a making a Salary Estimate of Data Driven jobs in India:
 
-* COmpany NAme
+* Company Name
 * Job title
 * Salary Estimate
 * Job Description

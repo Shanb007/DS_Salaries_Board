@@ -45,7 +45,7 @@ After Scraping, Data was kind of in some unstructered form, It needed some clean
 Created four regression models: Linear, Lasso, Rigid and Random forest.
 Random Forest performed the best out of all of them, then further applied GridSearchCV on randomForest ie. tuned our model to improve the solution further.
 Hence we achieved the best model with GridSearchCV.
-* Used MAe as metrics to compare the models.
+* Used MAE as evaluation metrics to compare the models.
 
 # Flask Production
 In this step, I built a flask API endpoint that was hosted on a local webserver by following along with the TDS tutorial in the reference section above. The API endpoint takes in a request with a list of values from a job listing and returns an estimated salary.
